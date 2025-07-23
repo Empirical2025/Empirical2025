@@ -1,0 +1,119 @@
+# SWE-bench Cognitive Analysis Toolkit
+
+This repository contains datasets, annotations, and analysis scripts from our empirical study on cognitive capabilities and behavioral patterns of large language model (LLM) agents in software issue resolution. Our study is based on the [SWE-bench](https://huggingface.co/datasets/SWE-bench/SWE-bench) benchmark and its verified subset, and investigates the cognitive alignment between human and LLM judgments, the reliability of LLM confidence, and the behavioral trajectories of [Openhands](https://github.com/All-Hands-AI/OpenHands) agents.
+
+## 📘 Dataset Overview
+
+We use the following datasets in our experiments:
+
+- **SWE-bench**: A large-scale benchmark of 2,294 real-world GitHub issues from 12 popular Python repositories, including the full codebase, problem statements, and developer-provided patches.
+- **SWE-bench-1699**: A subset of 1,699 issues from SWE-bench, annotated by OpenAI with three independent annotators
+- **SWE-bench Verified**: A subset of 500 issues from SWE-bench, selected by OpenAI as high-quality, well-specified, and solvable.  
+
+### Dataset Sources
+- SWE-bench: [Hugging Face Dataset](https://huggingface.co/datasets/SWE-bench/SWE-bench)
+- SWE-bench Verified: [OpenAI's Introduction](https://openai.com/index/introducing-swe-bench-verified/)
+- OpenAI Original Annotation Instructions: [PDF](https://cdn.openai.com/introducing-swe-bench-verified/swe-b-annotation-instructions.pdf)
+- SWE-bench-1699 Annotation Results: [ZIP](https://cdn.openai.com/introducing-swe-bench-verified/swe-bench-annotation-results.zip)
+
+
+#### Each issue includes:
+- **Problem Statement**: User-reported issue description.
+- **Gold Patch**: Developer-submitted solution.
+- **Test Patch**: Test added/modified to validate the fix.
+- **Developer Hints**: Additional comments or clarifications by the developer (if available).
+
+An example is shown below from the SWE-bench dataset. The **Problem Statement** describes the issue linked to a pull request (PR). The **Test Patch** defines the test case validating the fix, while the **Gold Patch** shows the actual code change (red: deletions, green: additions). **Developer Hints** are follow-up comments from developers.
+
+![SWE-bench Example](assets/SWEbench_example.png)
+
+
+
+## 🔍 Research Questions and Data
+
+### RQ1: Investigating the Cognitive Gap  
+We examine whether LLM agents demonstrate human-like cognitive behaviors when judging issue difficulty and specification quality.
+
+- **Key Diagnostic Features**: We manually annotate each issue for the presence of critical cues in both the problem statement and developer hints.  
+  ↳ [Annotation Data](https://github.com/Empirical2025/Empirical2025/blob/main/datasets/swe-bench-annotation-results/)
+
+| Problem Statement | Developer Hints | Description                       |
+|------------------|------------------|-----------------------------------|
+| `r1-steps`       | `h1-steps`       | Reproduction steps / test cases   |
+| `r2-stack`       | `h2-stack`       | Stack trace / error message       |
+| `r3-code`        | `h3-code`        | Code snippet                      |
+| `r4-media`       | `h4-media`       | Images or screenshots             |
+| `r5-docs`        | —                | Documentation or external links   |
+
+- **Explicit Cognitive Judgment**: LLMs assess each issue based on OpenAI’s annotation schema for problem specification, difficulty, and confidence level. Code available in [Explicit code Script - LLM judge](code)
+- **Implicit Confidence Estimation**: We apply a paraphrase-based uncertainty estimation method using semantic eccentricity to measure LLM confidence variability. Code available in [Implicit code Script - eccentricity](code)
+
+### RQ2: Confidence Collapse under Input Alteration  
+We test whether LLM judgments remain stable when key diagnostic information is altered.
+
+- **Information Removal**: We remove specific cues (`r1-step`, `r2-stack`, or both) from the problem statement.  
+- **Information Rephrasing**: We rewrite cues to be syntactically different but semantically equivalent.
+
+Data:
+- [Information Removal Data](https://github.com/Empirical2025/Empirical2025/tree/main/datasets)
+- [Information Rephrasing Data](https://github.com/Empirical2025/Empirical2025/tree/main/datasets)
+
+### RQ3: Agent Trajectory Analysis  
+We model and analyze the full decision process of agents during problem-solving.
+
+#### Agent Operation Tree  
+We represent each agent run as a hierarchical **Agent Operation Tree**, where each node captures a high-level operation:
+
+- File Localization
+- Thinking
+- Code Analysis
+- Code Modification
+- Test Execution
+- Task Completion
+
+Each operation is extracted from tool logs and annotated with metadata such as success/failure status and file context. Rollbacks (switching focus to a different file after failed test/modification) are also captured.  
+↳ See: [`fig/relation-tree`](fig/relation-tree)
+
+#### Trajectory Feature Extraction  
+We convert each operation tree into a fixed-length vector to enable quantitative analysis. Features capture behavior dimensions such as planning depth, loop patterns, and testing behavior.  
+Agent Operation Tree and Trajectory Feature Extraction Code available in [`script/traj_analyze`](script/traj_analyze)
+
+
+### RQ4: Toward Correction
+
+We assess an LLM’s **meta-cognitive consistency** by re-evaluating its initial clarity and difficulty judgments **after** it has performed repair operations.
+
+These assessments should, in principle, remain unchanged since a problem’s inherent clarity and difficulty are independent of the solution process. To test this, we provide the LLM with:
+1. Its **original clarity and difficulty ratings**, along with justifications (from [LLM Judgment](#rq1-investigating-the-cognitive-gap)),
+2. The corresponding **Agent Operation Tree** summarizing its repair steps (from [Trajectory Analysis](#rq3-agent-trajectory-analysis)),
+3. The extracted **trajectory feature vector** that captures behavioral performance metrics.
+
+The LLM-as-judge then outputs:
+- **Revised Clarity and Difficulty Ratings**
+- A **Bug-Fixing Score** (0 = no/incorrect fix, 1 = partial fix, 2 = complete fix), reflecting failure awareness [Aggarwal et al., 2025]
+- A **100-word Summary** of its execution trajectory
+- A **Binary Flag** indicating whether any critical trajectory issues occurred
+- A **Brief Description of Potential Improvements**
+
+These outputs allow us to assess **meta-cognitive consistency**, revealing how the LLM’s self-assessment adapts in light of its own actions.
+
+Code available in [`script/traj_analyze`](script/traj_analyze)
+
+---
+
+## 📂 Repository Structure
+
+```
+datasets/
+│   ├── swe-bench-annotation-results/     # Diagnostic feature annotations
+
+script/
+│   ├── traj_analyze/                     # Scripts for trajectory tree parsing and feature extraction
+│   └── llm_judgment/                     # Scripts for explicit and implicit judgment analysis
+
+assets/                                      # Visualization assets (e.g., example figures, relation trees)
+
+README.md                                 # This file
+```
+
+---
