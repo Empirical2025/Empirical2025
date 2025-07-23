@@ -1,4 +1,4 @@
-# SWE-bench Cognitive Analysis Toolkit
+# SWE-bench Cognitive and Agent Behavior Analysis Toolkit
 
 This repository contains datasets, annotations, and analysis scripts from our empirical study on cognitive capabilities and behavioral patterns of large language model (LLM) agents in software issue resolution. Our study is based on the [SWE-bench](https://huggingface.co/datasets/SWE-bench/SWE-bench) benchmark and its verified subset, and investigates the cognitive alignment between human and LLM judgments, the reliability of LLM confidence, and the behavioral trajectories of [Openhands](https://github.com/All-Hands-AI/OpenHands) agents.
 

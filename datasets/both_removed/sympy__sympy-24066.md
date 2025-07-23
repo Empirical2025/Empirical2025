@@ -1,1 +1,0 @@
-SI._collect_factor_and_dimension() cannot properly detect that exponent is dimensionless

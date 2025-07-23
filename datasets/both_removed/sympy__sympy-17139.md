@@ -1,1 +1,0 @@
-simplify(cos(x)**I): Invalid comparison of complex I (fu.py)

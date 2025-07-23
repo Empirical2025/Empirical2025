@@ -1,1 +1,0 @@
-floatformat() crashes on "0.00".
