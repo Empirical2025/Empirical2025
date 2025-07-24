@@ -123,5 +123,6 @@ The LLM-as-judge then outputs:
 
 These outputs allow us to assess **meta-cognitive consistency**, revealing how the LLM’s self-assessment adapts in light of its own actions.
 
-Code: [LLM-as-Judge-with-traj Script](https://github.com/Empirical2025/Empirical2025/blob/main/scripts/llm_judge/LLM_as_judge_for_description_execution_ablation.py)
-Output: [LLM-as-Judge-with-traj Judgment Results](https://github.com/Empirical2025/Empirical2025/blob/main/judgements)
+- **Code**:  [LLM-as-Judge-with-traj Script](https://github.com/Empirical2025/Empirical2025/blob/main/scripts/llm_judge/LLM_as_judge_for_description_execution_ablation.py)
+
+- **Output**: [LLM-as-Judge-with-traj Judgment Results](https://github.com/Empirical2025/Empirical2025/blob/main/judgements)
