@@ -58,7 +58,7 @@ We examine whether LLM agents demonstrate human-like cognitive behaviors when ju
   Code: [Eccentricity-Based Uncertainty Script](https://github.com/Empirical2025/Empirical2025/blob/main/scripts/uncertainty/uncertainty.py)
 
 - **Outputs**
-  - [Judgment Results](https://github.com/Empirical2025/Empirical2025/blob/main/datasets/judgements)
+  - [Judgment Results](https://github.com/Empirical2025/Empirical2025/blob/main/judgements)
   - [Uncertainty Results](https://github.com/Empirical2025/Empirical2025/blob/main/datasets/uncertainty_values.csv)
 
 
@@ -74,6 +74,9 @@ Data:
 - [Information Rephrasing/Removal Data](https://github.com/Empirical2025/Empirical2025/tree/main/datasets/SWE-bench_verified_ablation_descriptions)
 
 
+
+
+
 ### RQ3: Agent Trajectory Analysis  
 We model and analyze the full decision process of agents during problem-solving.
 
@@ -87,12 +90,17 @@ We represent each agent run as a hierarchical **Agent Operation Tree**, where ea
 - Test Execution
 - Task Completion
 
-Each operation is extracted from tool logs and annotated with metadata such as success/failure status and file context. Rollbacks (switching focus to a different file after failed test/modification) are also captured.  
-↳ See: [`fig/relation-tree`](fig/relation-tree)
+Each operation is extracted from tool logs and annotated with metadata such as success/failure status and file context. Rollbacks (switching focus to a different file after failed test/modification) are also captured.
+
+<div align="center">
+  <img src="assets/operation_tree_example_1.png" width="100%">
+  <img src="assets/operation_tree_example_2.png" width="100%">
+</div>
+
 
 #### Trajectory Feature Extraction  
 We convert each operation tree into a fixed-length vector to enable quantitative analysis. Features capture behavior dimensions such as planning depth, loop patterns, and testing behavior.  
-Agent Operation Tree and Trajectory Feature Extraction Code available in [`script/traj_analyze`](script/traj_analyze)
+Agent Operation Tree and Trajectory Feature Extraction Code available in [Agent Trajectory Analysis Script](script/traj_analyze)
 
 
 ### RQ4: Toward Correction
@@ -113,7 +121,7 @@ The LLM-as-judge then outputs:
 
 These outputs allow us to assess **meta-cognitive consistency**, revealing how the LLM’s self-assessment adapts in light of its own actions.
 
-Code available in [`script/traj_analyze`](script/traj_analyze)
+Code: [LLM-as-Judge-with-traj Script](https://github.com/Empirical2025/Empirical2025/blob/main/scripts/llm_judge/LLM_as_judge_for_description_execution_ablation.py)
 
 ---
 
