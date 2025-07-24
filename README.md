@@ -35,7 +35,7 @@ An example is shown below from the SWE-bench dataset. The **Problem Statement** 
 We examine whether LLM agents demonstrate human-like cognitive behaviors when judging issue difficulty and specification quality.
 
 - **Key Diagnostic Features**: We manually annotate each issue for the presence of critical cues in both the problem statement and developer hints.  
-  ↳ [Annotation Data](https://github.com/Empirical2025/Empirical2025/blob/main/datasets/swe-bench-annotation-results/)
+  ↳ [Annotation Data](https://github.com/Empirical2025/Empirical2025/blob/main/datasets/features_annotations.csv)
 
 | Problem Statement | Developer Hints | Description                       |
 |------------------|------------------|-----------------------------------|
@@ -45,8 +45,24 @@ We examine whether LLM agents demonstrate human-like cognitive behaviors when ju
 | `r4-media`       | `h4-media`       | Images or screenshots             |
 | `r5-docs`        | —                | Documentation or external links   |
 
-- **Explicit Cognitive Judgment**: LLMs assess each issue based on OpenAI’s annotation schema for problem specification, difficulty, and confidence level. Code available in [Explicit code Script - LLM judge](code)
-- **Implicit Confidence Estimation**: We apply a paraphrase-based uncertainty estimation method using semantic eccentricity to measure LLM confidence variability. Code available in [Implicit code Script - eccentricity](code)
+
+- **Explicit Cognitive Judgment**  
+  LLMs are prompted to assess each issue based on OpenAI’s annotation schema, which includes:
+  - **Problem Specification** (clarity and completeness)
+  - **Task Difficulty**
+  - **Confidence Level**  
+  Code: [LLM-as-Judge Script](https://github.com/Empirical2025/Empirical2025/blob/main/scripts/llm_judge/LLM_as_judge_for_description_ablation.py)
+
+- **Implicit Confidence Estimation**  
+  We use a paraphrase-based uncertainty estimation method that measures **semantic eccentricity**, quantifying how variable the LLM’s answers are to semantically equivalent prompts. Greater variation implies lower internal confidence.  
+  Code: [Eccentricity-Based Uncertainty Script](https://github.com/Empirical2025/Empirical2025/blob/main/scripts/uncertainty/uncertainty.py)
+
+- **Outputs**
+  - [Judgment Results](https://github.com/Empirical2025/Empirical2025/blob/main/datasets/judgements)
+  - [Uncertainty Results](https://github.com/Empirical2025/Empirical2025/blob/main/datasets/uncertainty_values.csv)
+
+
+
 
 ### RQ2: Confidence Collapse under Input Alteration  
 We test whether LLM judgments remain stable when key diagnostic information is altered.
@@ -55,8 +71,8 @@ We test whether LLM judgments remain stable when key diagnostic information is a
 - **Information Rephrasing**: We rewrite cues to be syntactically different but semantically equivalent.
 
 Data:
-- [Information Removal Data](https://github.com/Empirical2025/Empirical2025/tree/main/datasets)
-- [Information Rephrasing Data](https://github.com/Empirical2025/Empirical2025/tree/main/datasets)
+- [Information Rephrasing/Removal Data](https://github.com/Empirical2025/Empirical2025/tree/main/datasets/SWE-bench_verified_ablation_descriptions)
+
 
 ### RQ3: Agent Trajectory Analysis  
 We model and analyze the full decision process of agents during problem-solving.
