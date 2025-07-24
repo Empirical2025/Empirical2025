@@ -100,7 +100,9 @@ Each operation is extracted from tool logs and annotated with metadata such as s
 
 #### Trajectory Feature Extraction  
 We convert each operation tree into a fixed-length vector to enable quantitative analysis. Features capture behavior dimensions such as planning depth, loop patterns, and testing behavior.  
-Agent Operation Tree and Trajectory Feature Extraction Code available in [Agent Trajectory Analysis Script](https://github.com/Empirical2025/Empirical2025/blob/main/scripts/traj_anlyze)
+
+- **Code**: [Agent Trajectory Analysis Script](https://github.com/Empirical2025/Empirical2025/blob/main/scripts/traj_anlyze)
+- **Data & Results**: [Agent Trajectories, Operation Trees, and Analysis Outputs](https://drive.google.com/drive/folders/1w2mq290GOqgESGmOPdQ4dkHGh-fTuzDD?usp=sharing) 
 
 
 ### RQ4: Toward Correction
@@ -122,22 +124,4 @@ The LLM-as-judge then outputs:
 These outputs allow us to assess **meta-cognitive consistency**, revealing how the LLM’s self-assessment adapts in light of its own actions.
 
 Code: [LLM-as-Judge-with-traj Script](https://github.com/Empirical2025/Empirical2025/blob/main/scripts/llm_judge/LLM_as_judge_for_description_execution_ablation.py)
-
----
-
-## 📂 Repository Structure
-
-```
-datasets/
-│   ├── swe-bench-annotation-results/     # Diagnostic feature annotations
-
-script/
-│   ├── traj_analyze/                     # Scripts for trajectory tree parsing and feature extraction
-│   └── llm_judgment/                     # Scripts for explicit and implicit judgment analysis
-
-assets/                                      # Visualization assets (e.g., example figures, relation trees)
-
-README.md                                 # This file
-```
-
----
+Output: [LLM-as-Judge-with-traj Judgment Results](https://github.com/Empirical2025/Empirical2025/blob/main/judgements)
