@@ -100,7 +100,7 @@ Each operation is extracted from tool logs and annotated with metadata such as s
 
 #### Trajectory Feature Extraction  
 We convert each operation tree into a fixed-length vector to enable quantitative analysis. Features capture behavior dimensions such as planning depth, loop patterns, and testing behavior.  
-Agent Operation Tree and Trajectory Feature Extraction Code available in [Agent Trajectory Analysis Script](script/traj_analyze)
+Agent Operation Tree and Trajectory Feature Extraction Code available in [Agent Trajectory Analysis Script](https://github.com/Empirical2025/Empirical2025/blob/main/scripts/traj_anlyze)
 
 
 ### RQ4: Toward Correction
@@ -110,7 +110,7 @@ We assess an LLM’s **meta-cognitive consistency** by re-evaluating its initial
 These assessments should, in principle, remain unchanged since a problem’s inherent clarity and difficulty are independent of the solution process. To test this, we provide the LLM with:
 1. Its **original clarity and difficulty ratings**, along with justifications (from [LLM Judgment](#rq1-investigating-the-cognitive-gap)),
 2. The corresponding **Agent Operation Tree** summarizing its repair steps (from [Trajectory Analysis](#rq3-agent-trajectory-analysis)),
-3. The extracted **trajectory feature vector** that captures behavioral performance metrics.
+3. The extracted **trajectory feature vector** that captures behavioral performance metrics (from [Trajectory Analysis](#rq3-agent-trajectory-analysis)).
 
 The LLM-as-judge then outputs:
 - **Revised Clarity and Difficulty Ratings**
